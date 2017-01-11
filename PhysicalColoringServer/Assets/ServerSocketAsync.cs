@@ -77,17 +77,6 @@ public class ServerSocketAsync : MonoBehaviour
         StartListening();
     }
 
-    void Update()
-    {
-        if (IsDataRecieved())
-        {
-            ObjectToTransfer obj = ReadObjectAndClear();
-            image.texture = obj.GetTexture();
-            ObjectID.text = obj.ObjectID + "";
-            PlayerID.text = obj.PlayerID + "";
-        }
-    }
-
     public void StartListening()
     {
 
@@ -201,12 +190,7 @@ public class ServerSocketAsync : MonoBehaviour
 
     void ConstructObj(byte[] Data)
     {
-        //print("Read " + Data.Length + " bytes from socket. \n Data :");
-        //print(Data.Length);
-        //print(Data[1]);
-        //print(Data[3]);
         listener.BeginAccept(new AsyncCallback(AcceptCallback), listener);
-
 
         RecievedObj = JsonUtility.FromJson<ObjectToTransfer>(Encoding.UTF8.GetString(Data));
         bRecievedData = true;
